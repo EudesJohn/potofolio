@@ -13,6 +13,17 @@ export default function Home() {
   const [skills, setSkills] = useState<Skill[]>([]);
   const t = useSiteText();
 
+  const slides: string[] | undefined = (() => {
+    const raw = t('hero_slides');
+    if (!raw) return undefined;
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : undefined;
+    } catch {
+      return undefined;
+    }
+  })();
+
   useEffect(() => {
     getProjects().then(setProjects).catch(console.error);
     getSkills().then(setSkills).catch(console.error);
@@ -24,7 +35,7 @@ export default function Home() {
     <div>
       {/* ---------- HERO ---------- */}
       <section className="relative overflow-hidden">
-        <BgSlideshow />
+        <BgSlideshow slides={slides} />
         <div
           className="pointer-events-none absolute inset-0"
           style={{

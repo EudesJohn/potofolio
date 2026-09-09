@@ -1,4 +1,5 @@
 import { NavLink, Link } from 'react-router-dom';
+import Logo from './Logo';
 
 const links = [
   { to: '/', label: 'Accueil' },
@@ -13,8 +14,8 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <nav className="border-b border-edge bg-night/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link to="/" className="font-display text-lg font-bold tracking-tight">
-            EJD<span className="text-benin-bright">.</span>
+          <Link to="/" className="text-lg">
+            <Logo />
           </Link>
 
           <ul className="hidden items-center gap-7 md:flex">

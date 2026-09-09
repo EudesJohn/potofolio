@@ -12,6 +12,9 @@ export const SITE_TEXT_DEFAULTS: Record<string, string> = {
   contact_github: 'https://github.com/EudesJohn',
   contact_linkedin: 'https://www.linkedin.com/in/eudes-johnson-djogo-15a316397',
   contact_location: 'Cotonou / Lokossa, Bénin',
+  logo_text: 'EJD',
+  logo_image: '',
+  hero_slides: '["/bg/slide-1.svg","/bg/slide-2.svg","/bg/slide-3.svg","/bg/slide-4.svg"]',
 };
 
 let cache: Record<string, string> | null = null;

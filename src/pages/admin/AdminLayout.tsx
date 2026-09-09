@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import Logo from '../../components/Logo';
 
 const NAV_ITEMS = [
   { to: '/eudes/-/admin', label: 'Tableau de bord', end: true },
@@ -28,8 +29,8 @@ export default function AdminLayout() {
       <header className="border-b border-edge bg-panel2">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <div className="flex items-center gap-4">
-            <Link to="/" className="font-display font-bold">
-              EJD<span className="text-benin-bright">.</span>
+            <Link to="/" className="text-lg">
+              <Logo />
             </Link>
             <span className="rounded-full border border-edge px-2.5 py-0.5 text-xs text-fog">
               Admin
