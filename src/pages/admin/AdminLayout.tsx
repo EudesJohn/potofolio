@@ -7,7 +7,7 @@ export default function AdminLayout() {
 
   async function handleSignOut() {
     await signOut();
-    navigate('/admin/login');
+    navigate('/eudes/-/admin/login');
   }
 
   const navCls = ({ isActive }: { isActive: boolean }) =>
@@ -43,17 +43,17 @@ export default function AdminLayout() {
         <nav className="md:w-56 md:shrink-0">
           <ul className="flex gap-2 md:flex-col">
             <li className="flex-1 md:flex-none">
-              <NavLink to="/admin" end className={navCls}>
+              <NavLink to="/eudes/-/admin" end className={navCls}>
                 📊 Tableau de bord
               </NavLink>
             </li>
             <li className="flex-1 md:flex-none">
-              <NavLink to="/admin/projets" className={navCls}>
+              <NavLink to="/eudes/-/admin/projets" className={navCls}>
                 📁 Projets
               </NavLink>
             </li>
             <li className="flex-1 md:flex-none">
-              <NavLink to="/admin/messages" className={navCls}>
+              <NavLink to="/eudes/-/admin/messages" className={navCls}>
                 ✉️ Messages
               </NavLink>
             </li>

@@ -1,12 +1,14 @@
 import { useState, type FormEvent } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export default function Login() {
   const { signIn, session } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: { pathname: string } } | null)?.from?.pathname ?? '/admin';
+  const from =
+    (location.state as { from?: { pathname: string } } | null)?.from?.pathname ??
+    '/eudes/-/admin';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +16,7 @@ export default function Login() {
   const [busy, setBusy] = useState(false);
 
   if (session) {
-    navigate('/admin', { replace: true });
+    return <Navigate to="/eudes/-/admin" replace />;
   }
 
   async function handleSubmit(e: FormEvent) {

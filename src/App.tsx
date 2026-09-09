@@ -34,10 +34,10 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Route>
 
-      {/* Administration */}
-      <Route path="/admin/login" element={<Login />} />
+      {/* Administration — URL discrète */}
+      <Route path="/eudes/-/admin/login" element={<Login />} />
       <Route
-        path="/admin"
+        path="/eudes/-/admin"
         element={
           <RequireAuth>
             <AdminLayout />

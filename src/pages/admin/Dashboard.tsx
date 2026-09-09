@@ -20,8 +20,8 @@ export default function Dashboard() {
   const unread = messages.filter(m => !m.is_read).length;
 
   const stats = [
-    { label: 'Projets', value: projects.length, sub: `${projects.filter(p => p.published).length} publiés`, to: '/admin/projets' },
-    { label: 'Messages', value: messages.length, sub: `${unread} non lu${unread > 1 ? 's' : ''}`, to: '/admin/messages' },
+    { label: 'Projets', value: projects.length, sub: `${projects.filter(p => p.published).length} publiés`, to: '/eudes/-/admin/projets' },
+    { label: 'Messages', value: messages.length, sub: `${unread} non lu${unread > 1 ? 's' : ''}`, to: '/eudes/-/admin/messages' },
   ];
 
   return (
