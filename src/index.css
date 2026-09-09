@@ -1,18 +1,20 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-night: #0a0f0c;
-  --color-panel: #131c16;
-  --color-panel2: #0f1611;
-  --color-edge: #22322a;
-  --color-ink: #e8efe9;
-  --color-fog: #9db3a6;
+  /* Fond terminal : noir profond, jamais de blanc */
+  --color-night: #050805;
+  --color-panel: #0b120c;
+  --color-panel2: #080f0a;
+  --color-edge: #1c2f20;
+  /* Texte : verts phosphore, zéro blanc */
+  --color-ink: #4ade80;
+  --color-fog: #2f7a4c;
   --color-benin-green: #008751;
   --color-benin-bright: #22c55e;
   --color-benin-yellow: #fcd116;
   --color-benin-red: #e8112d;
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
   /* Courbes d'animation — ease-out fort, jamais d'ease-in sur l'UI */
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -23,6 +25,8 @@ html {
 }
 
 body {
+  background: var(--color-night);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -34,8 +38,8 @@ h3 {
 }
 
 ::selection {
-  background: var(--color-benin-green);
-  color: #fff;
+  background: var(--color-benin-bright);
+  color: #050805;
 }
 
 /* Scrollbar discrète et coordonnée au thème */
@@ -72,6 +76,56 @@ h3 {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   background-size: 120px 120px;
+}
+
+/* ---------- Scanlines CRT très discrètes ---------- */
+.scanlines {
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(74, 222, 128, 0.025) 0px,
+    rgba(74, 222, 128, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* ---------- Curseur de terminal clignotant ---------- */
+.cursor-blink {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  vertical-align: text-bottom;
+  background: var(--color-benin-bright);
+  animation: blink 1.06s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* ---------- Fenêtre terminal ---------- */
+.term-window {
+  box-shadow:
+    0 0 0 1px rgba(34, 197, 94, 0.18),
+    0 0 32px rgba(34, 197, 94, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.5);
+}
+.term-dots span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+}
+
+/* ---------- Titres à gradient (vert uniquement) ---------- */
+.gradient-text {
+  background: linear-gradient(100deg, #4ade80 30%, #22c55e 70%, #fcd116 100%);
+  /* NOTE: ce dégradé commence bien en vert — voir token --color-ink */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ---------- Boutons avec feedback d'appui ---------- */
@@ -159,9 +213,9 @@ h3 {
   }
 }
 
-/* ---------- Titres à gradient ---------- */
+/* ---------- Titres à gradient (verts uniquement, zéro blanc) ---------- */
 .gradient-text {
-  background: linear-gradient(100deg, #e8efe9 30%, #22c55e 75%, #fcd116 100%);
+  background: linear-gradient(100deg, #4ade80 30%, #22c55e 70%, #fcd116 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -329,9 +383,9 @@ h3 {
 /* ---------- Glow du héro public ---------- */
 .hero-glow {
   background:
-    radial-gradient(700px 420px at 78% 18%, rgba(0, 135, 81, 0.18), transparent 70%),
-    radial-gradient(520px 380px at 12% 82%, rgba(252, 209, 22, 0.07), transparent 70%),
-    radial-gradient(900px 500px at 50% -10%, rgba(34, 197, 94, 0.08), transparent 65%);
+    radial-gradient(700px 420px at 78% 18%, rgba(0, 135, 81, 0.22), transparent 70%),
+    radial-gradient(520px 380px at 12% 82%, rgba(34, 197, 94, 0.09), transparent 70%),
+    radial-gradient(900px 500px at 50% -10%, rgba(34, 197, 94, 0.1), transparent 65%);
 }
 
 /* ---------- Barre de fin de texte (décoratif) ---------- */
@@ -343,6 +397,9 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .cursor-blink {
+    animation: none;
   }
   .btn-primary,
   .glow-card::before,

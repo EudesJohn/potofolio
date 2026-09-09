@@ -14,6 +14,8 @@ export default function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Overlay CRT : scanlines sur tout le site, jamais interactif */}
+      <div className="scanlines pointer-events-none fixed inset-0 z-[60]" aria-hidden />
       <Navbar />
       <main className="flex-1 pt-20">
         <Outlet />

@@ -129,7 +129,7 @@ function MetricCard({ metric, onChanged }: { metric: Metric; onChanged: () => vo
             </div>
             <button
               type="submit"
-              className="rounded-xl bg-benin-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#00a462]"
+              className="rounded-xl bg-benin-green px-4 py-2 font-mono text-sm font-semibold text-night transition hover:bg-[#00a462]"
             >
               Insérer
             </button>
@@ -225,7 +225,7 @@ export default function AdminProgress() {
         </div>
         <button
           type="submit"
-          className="rounded-xl bg-benin-green px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#00a462]"
+          className="rounded-xl bg-benin-green px-5 py-2.5 font-mono text-sm font-semibold text-night transition hover:bg-[#00a462]"
         >
           Créer
         </button>

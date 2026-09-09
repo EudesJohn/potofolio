@@ -36,7 +36,7 @@ export default function Login() {
   }
 
   const inputCls =
-    'w-full rounded-xl border border-edge bg-panel2 px-4 py-3 text-sm outline-none transition focus:border-benin-bright';
+    'field w-full rounded-xl border border-edge bg-panel2 px-4 py-3 font-mono text-sm outline-none placeholder:text-fog/50';
 
   return (
     <div className="flex min-h-screen items-center justify-center px-6">
@@ -76,7 +76,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-xl bg-benin-green px-6 py-3 font-semibold text-white transition hover:bg-[#00a462] disabled:opacity-50"
+            className="w-full rounded-xl bg-benin-green px-6 py-3 font-mono font-semibold text-night transition hover:bg-[#00a462] disabled:opacity-50"
           >
             {busy ? 'Connexion…' : 'Se connecter'}
           </button>

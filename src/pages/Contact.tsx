@@ -144,7 +144,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="btn-primary w-full rounded-xl bg-benin-green px-6 py-3 font-semibold text-white shadow-lg shadow-benin-green/25 disabled:cursor-not-allowed disabled:opacity-50"
+                className="btn-primary w-full rounded-xl bg-benin-green px-6 py-3 font-mono font-semibold text-night shadow-lg shadow-benin-green/25 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {status === 'sending' ? 'Envoi…' : 'Envoyer le message'}
               </button>

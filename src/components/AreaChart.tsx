@@ -131,7 +131,7 @@ export default function AreaChart({
           <g transform={`translate(${flipTooltip ? hp[0] - 132 : hp[0] + 12}, ${Math.max(PAD, hp[1] - 44)})`}>
             <rect width="120" height="36" rx="8" fill="#0f1611" stroke="#22322a" />
             <text x="10" y="14" fill="#9db3a6" fontSize="10">{data[hover].label}</text>
-            <text x="10" y="28" fill="#e8efe9" fontSize="12" fontWeight="600">{data[hover].value}</text>
+            <text x="10" y="28" fill="#4ade80" fontSize="12" fontWeight="600">{data[hover].value}</text>
           </g>
         </g>
       )}

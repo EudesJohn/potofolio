@@ -158,7 +158,7 @@ export default function AdminSettings() {
                       type="file"
                       accept="image/png,image/jpeg,image/webp,image/svg+xml"
                       onChange={e => upload(e.target.files?.[0], 'logo')}
-                      className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-[#00a462]"
+                      className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-night hover:file:bg-[#00a462]"
                     />
                     <input
                       value={values.logo_image ?? ''}
@@ -204,7 +204,7 @@ export default function AdminSettings() {
                 type="file"
                 accept="image/png,image/jpeg,image/webp,image/svg+xml"
                 onChange={e => upload(e.target.files?.[0], 'slide')}
-                className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-[#00a462]"
+                className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-night hover:file:bg-[#00a462]"
               />
               <div className="flex gap-2">
                 <input
@@ -300,7 +300,7 @@ export default function AdminSettings() {
           <button
             type="submit"
             disabled={status === 'saving'}
-            className="rounded-xl bg-benin-green px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#00a462] disabled:opacity-50"
+            className="rounded-xl bg-benin-green px-6 py-2.5 font-mono text-sm font-semibold text-night transition hover:bg-[#00a462] disabled:opacity-50"
           >
             {status === 'saving' ? 'Enregistrement…' : 'Enregistrer'}
           </button>

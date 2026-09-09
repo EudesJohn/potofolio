@@ -151,7 +151,7 @@ export default function AdminProjects() {
         </div>
         <button
           onClick={startCreate}
-          className="rounded-xl bg-benin-green px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#00a462]"
+          className="rounded-xl bg-benin-green px-5 py-2.5 font-mono text-sm font-semibold text-night transition hover:bg-[#00a462]"
         >
           + Nouveau projet
         </button>
@@ -221,7 +221,7 @@ export default function AdminProjects() {
                   type="file"
                   accept="image/png,image/jpeg,image/webp,image/svg+xml"
                   onChange={e => handleUpload(e.target.files?.[0])}
-                  className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-[#00a462]"
+                  className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-night hover:file:bg-[#00a462]"
                 />
                 <input
                   value={draft.preview}
@@ -267,7 +267,7 @@ export default function AdminProjects() {
             <button
               type="submit"
               disabled={busy}
-              className="rounded-xl bg-benin-green px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#00a462] disabled:opacity-50"
+              className="rounded-xl bg-benin-green px-6 py-2.5 font-mono text-sm font-semibold text-night transition hover:bg-[#00a462] disabled:opacity-50"
             >
               {busy ? 'Enregistrement…' : 'Enregistrer'}
             </button>
