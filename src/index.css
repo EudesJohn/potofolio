@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-night: #0a0f0c;
+  --color-panel: #131c16;
+  --color-panel2: #0f1611;
+  --color-edge: #22322a;
+  --color-ink: #e8efe9;
+  --color-fog: #9db3a6;
+  --color-benin-green: #008751;
+  --color-benin-bright: #22c55e;
+  --color-benin-yellow: #fcd116;
+  --color-benin-red: #e8112d;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-night);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--color-benin-green);
+  color: #fff;
+}
+
+/* Apparition au scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Bande tricolore béninoise */
+.tricolor {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-benin-green) 0 33.33%,
+    var(--color-benin-yellow) 33.33% 66.66%,
+    var(--color-benin-red) 66.66% 100%
+  );
+}

@@ -1,0 +1,80 @@
+import { NavLink, Link } from 'react-router-dom';
+
+const links = [
+  { to: '/', label: 'Accueil' },
+  { to: '/a-propos', label: 'À propos' },
+  { to: '/projets', label: 'Projets' },
+  { to: '/competences', label: 'Compétences' },
+  { to: '/contact', label: 'Contact' },
+];
+
+export default function Navbar() {
+  return (
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="tricolor" />
+      <nav className="border-b border-edge bg-night/85 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+          <Link to="/" className="font-display text-lg font-bold tracking-tight">
+            EJD<span className="text-benin-bright">.</span>
+          </Link>
+
+          <ul className="hidden items-center gap-7 md:flex">
+            {links.map(l => (
+              <li key={l.to}>
+                <NavLink
+                  to={l.to}
+                  className={({ isActive }) =>
+                    `text-sm font-medium transition-colors ${
+                      isActive ? 'text-benin-bright' : 'text-fog hover:text-benin-bright'
+                    }`
+                  }
+                >
+                  {l.label}
+                </NavLink>
+              </li>
+            ))}
+            <li>
+              <Link
+                to="/admin/login"
+                className="rounded-lg border border-edge px-3 py-1.5 text-sm text-fog transition-colors hover:border-benin-bright hover:text-benin-bright"
+                title="Administration"
+              >
+                Admin
+              </Link>
+            </li>
+          </ul>
+
+          {/* Menu mobile */}
+          <details className="relative md:hidden">
+            <summary className="cursor-pointer list-none text-2xl leading-none text-ink">
+              ☰
+            </summary>
+            <ul className="absolute right-0 top-10 w-48 rounded-xl border border-edge bg-panel p-2 shadow-xl">
+              {links.map(l => (
+                <li key={l.to}>
+                  <NavLink
+                    to={l.to}
+                    className={({ isActive }) =>
+                      `block rounded-lg px-3 py-2 text-sm ${
+                        isActive
+                          ? 'bg-panel2 text-benin-bright'
+                          : 'text-fog hover:bg-panel2 hover:text-ink'
+                      }`
+                    }
+                  >
+                    {l.label}
+                  </NavLink>
+                </li>
+              ))}
+              <li className="mt-1 border-t border-edge pt-1">
+                <Link to="/admin/login" className="block rounded-lg px-3 py-2 text-sm text-fog hover:bg-panel2">
+                  Admin
+                </Link>
+              </li>
+            </ul>
+          </details>
+        </div>
+      </nav>
+    </header>
+  );
+}

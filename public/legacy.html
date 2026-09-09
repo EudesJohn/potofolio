@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eudes Johnson DJOGO — Technicien de maintenance biomédicale & Entrepreneur digital</title>
+<meta name="description" content="Portfolio d'Eudes Johnson DJOGO : technicien de maintenance biomédicale, développeur web full-stack et entrepreneur digital basé à Cotonou/Lokossa, Bénin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f0c;
+    --bg-alt: #0f1611;
+    --card: #131c16;
+    --border: #22322a;
+    --text: #e8efe9;
+    --muted: #9db3a6;
+    --green: #008751;
+    --green-bright: #22c55e;
+    --yellow: #fcd116;
+    --red: #e8112d;
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--green); color: #fff; }
+
+  h1, h2, h3 { font-family: var(--font-display); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Bande tricolore béninoise ---------- */
+  .tricolor {
+    height: 4px;
+    background: linear-gradient(90deg, var(--green) 0 33.33%, var(--yellow) 33.33% 66.66%, var(--red) 66.66% 100%);
+  }
+
+  /* ---------- Navigation ---------- */
+  nav {
+    position: fixed;
+    top: 4px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 15, 12, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--green-bright); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-bright); }
+
+  .burger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  @media (max-width: 768px) {
+    .burger { display: block; }
+    .nav-links {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+      display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li a {
+      display: block;
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 80px;
+    position: relative;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(600px 400px at 80% 20%, rgba(0, 135, 81, 0.15), transparent),
+      radial-gradient(500px 350px at 15% 80%, rgba(252, 209, 22, 0.06), transparent);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-alt);
+    color: var(--muted);
+    font-size: 0.82rem;
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-bright);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .accent { color: var(--green-bright); }
+  .hero .subtitle {
+    margin-top: 18px;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    color: var(--yellow);
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+  .hero p.lead {
+    margin-top: 20px;
+    max-width: 640px;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+  .hero-ctas { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--green);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 135, 81, 0.35);
+  }
+  .btn-primary:hover { background: #00a462; }
+  .btn-ghost {
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: transparent;
+  }
+  .btn-ghost:hover { border-color: var(--green-bright); color: var(--green-bright); }
+
+  .hero-stats {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .stat {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: var(--bg-alt);
+  }
+  .stat b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--text);
+  }
+  .stat span { font-size: 0.82rem; color: var(--muted); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 96px 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-label {
+    color: var(--green-bright);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 18px;
+  }
+  .section-desc { color: var(--muted); max-width: 640px; }
+
+  /* À propos */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+  }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text p { color: var(--muted); margin-bottom: 16px; }
+  .about-text strong { color: var(--text); }
+  .fact-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 24px;
+  }
+  .fact-card h3 {
+    font-size: 0.95rem;
+    color: var(--yellow);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .fact-card ul { list-style: none; }
+  .fact-card li {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .fact-card li:last-child { border-bottom: none; }
+  .fact-card li b { color: var(--text); font-weight: 600; }
+
+  /* Compétences */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .skill-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 24px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .skill-card:hover { border-color: var(--green); transform: translateY(-3px); }
+  .skill-icon { font-size: 1.6rem; margin-bottom: 12px; }
+  .skill-card h3 { font-size: 1.05rem; margin-bottom: 10px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .tag.hl { border-color: rgba(34, 197, 94, 0.4); color: var(--green-bright); }
+
+  /* Projets */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 26px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .project-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--yellow));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .project-card:hover { border-color: var(--green); transform: translateY(-4px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-num {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .project-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+  .project-card p { color: var(--muted); font-size: 0.92rem; flex: 1; }
+  .project-card .tags { margin-top: 16px; }
+
+  /* Setup IA */
+  .setup-box {
+    margin-top: 48px;
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    background: var(--bg-alt);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .setup-box h3 {
+    grid-column: 1 / -1;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .setup-box h3 span { color: var(--yellow); }
+  .setup-item b {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--green-bright);
+    margin-bottom: 4px;
+  }
+  .setup-item span { color: var(--muted); font-size: 0.88rem; }
+
+  /* Contact */
+  .contact-wrap { text-align: center; }
+  .contact-wrap .section-desc { margin: 0 auto 36px; }
+  .contact-cards {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer .flag { letter-spacing: 0.3em; margin-top: 8px; font-size: 1rem; }
+
+  /* Reveal au scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="tricolor"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#accueil">EJD<span>.</span></a>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="accueil">
+  <div class="container">
+    <div class="hero-badge reveal"><span class="dot"></span> Disponible pour collaborations · Cotonou / Lokossa, Bénin</div>
+    <h1 class="reveal">Eudes Johnson<br>DJOGO<span class="accent">.</span></h1>
+    <p class="subtitle reveal">Technicien de maintenance biomédicale &amp; Entrepreneur digital</p>
+    <p class="lead reveal">
+      Étudiant en 3ᵉ année de Maintenance des Systèmes Industriels (MSI) à l'INSTI Lokossa.
+      Je relie deux mondes : la fiabilité des équipements — biomédicaux et industriels —
+      et la création numérique, du développement full-stack aux outils IA en local.
+    </p>
+    <div class="hero-ctas reveal">
+      <a class="btn btn-primary" href="#projets">Découvrir mes projets</a>
+      <a class="btn btn-ghost" href="#contact">Me contacter</a>
+    </div>
+    <div class="hero-stats reveal">
+      <div class="stat"><b>6+</b><span>Projets menés de bout en bout</span></div>
+      <div class="stat"><b>126 000+</b><span>Paires de mots français–fon (Gbé Tché)</span></div>
+      <div class="stat"><b>MSI</b><span>3ᵉ année · INSTI Lokossa</span></div>
+      <div class="stat"><b>Full-stack</b><span>React · Node.js · Supabase · Firebase</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ À PROPOS ============ -->
+<section id="apropos">
+  <div class="container">
+    <p class="section-label reveal">À propos</p>
+    <h2 class="section-title reveal">Entre atelier de maintenance<br>et création numérique</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          <strong>Technicien de maintenance biomédicale</strong>, je m'intéresse de près à la sécurité
+          électrique des équipements médicaux et aux normes qui les encadrent, comme la
+          <strong>CEI 62353</strong> — un sujet au cœur de mon mémoire, porté par un prototype ESP32.
+        </p>
+        <p>
+          En parallèle, je suis <strong>entrepreneur digital</strong> : je conçois des produits web
+          complets, des plateformes éducatives, des funnels de vente et des contenus — en restant
+          attaché à ma culture béninoise, que j'explore aussi à travers des projets technologiques
+          comme la traduction <strong>français–fon</strong>.
+        </p>
+        <p>
+          Curieux de philosophie et défenseur d'une identité culturelle forte, je crois qu'un bon
+          technicien, comme un bon entrepreneur, doit comprendre les systèmes avant de les réparer
+          ou de les construire.
+        </p>
+      </div>
+      <div class="fact-card reveal">
+        <h3>Profil en bref</h3>
+        <ul>
+          <li><b>Formation :</b> 3ᵉ année MSI — INSTI Lokossa (Bénin)</li>
+          <li><b>Diplômes :</b> Baccalauréat F3 · CAP</li>
+          <li><b>Spécialité :</b> Maintenance biomédicale</li>
+          <li><b>Activité :</b> Entrepreneur digital</li>
+          <li><b>Base :</b> Cotonou / Lokossa, Bénin</li>
+          <li><b>Centres d'intérêt :</b> Philosophie · Culture béninoise</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPÉTENCES ============ -->
+<section id="competences">
+  <div class="container">
+    <p class="section-label reveal">Compétences</p>
+    <h2 class="section-title reveal">Ce que je maîtrise</h2>
+    <p class="section-desc reveal">Un profil hybride : de la carte électronique au produit numérique, avec une vraie pratique des outils IA en local sur machine contrainte.</p>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <h3>Développement web full-stack</h3>
+        <div class="tags">
+          <span class="tag hl">React</span><span class="tag hl">Node.js</span>
+          <span class="tag">Vite</span><span class="tag">Firebase</span>
+          <span class="tag">Supabase</span><span class="tag">Vercel</span>
+          <span class="tag">React Native</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🔧</div>
+        <h3>Maintenance &amp; biomédical</h3>
+        <div class="tags">
+          <span class="tag hl">Équipements biomédicaux</span>
+          <span class="tag">Maintenance industrielle</span>
+          <span class="tag">CEI 62353</span>
+          <span class="tag">ESP32</span>
+          <span class="tag">Sécurité électrique</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🐍</div>
+        <h3>Python &amp; données</h3>
+        <div class="tags">
+          <span class="tag hl">ReportLab</span>
+          <span class="tag hl">python-docx</span>
+          <span class="tag">AST</span>
+          <span class="tag">NLP / statistiques</span>
+          <span class="tag">IBM Model 1</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <h3>IA &amp; outils en local</h3>
+        <div class="tags">
+          <span class="tag hl">Claude Code (VS Code)</span>
+          <span class="tag">Codex CLI (DeepSeek V4 Flash)</span>
+          <span class="tag">Ollama</span>
+          <span class="tag">Gemma4:e2b</span>
+          <span class="tag">Qwen2.5-Coder:3b</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">💼</div>
+        <h3>Entrepreneuriat digital</h3>
+        <div class="tags">
+          <span class="tag hl">Packs réseaux sociaux</span>
+          <span class="tag">Ebooks</span>
+          <span class="tag">Facebook Ads</span>
+          <span class="tag">Funnels de vente</span>
+          <span class="tag">Marketing de contenu</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-box reveal">
+      <h3>⚙️ <span>Mon setup</span> — travailler malin sur une machine modeste</h3>
+      <div class="setup-item"><b>Machine</b><span>Intel i7-7500U · GPU 940MX · 16 Go RAM</span></div>
+      <div class="setup-item"><b>Assistant IA</b><span>Claude Code dans VS Code, comparé à Codex CLI</span></div>
+      <div class="setup-item"><b>Modèles locaux</b><span>Ollama : Gemma4:e2b &amp; Qwen2.5-Coder:3b (100 % CPU)</span></div>
+      <div class="setup-item"><b>Approche</b><span>Outils efficaces, pas de matériel coûteux : le logiciel compense</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJETS ============ -->
+<section id="projets">
+  <div class="container">
+    <p class="section-label reveal">Projets</p>
+    <h2 class="section-title reveal">Réalisations &amp; expérimentations</h2>
+    <p class="section-desc reveal">Des projets qui traversent mes deux univers : la technologie appliquée au terrain et l'entrepreneuriat numérique ancré dans la culture béninoise.</p>
+
+    <div class="projects-grid">
+      <article class="project-card reveal">
+        <span class="project-num">01 · MÉMOIRE</span>
+        <h3>Moniteur de sécurité électrique ESP32</h3>
+        <p>Prototype de banc de test conforme à la norme CEI 62353 pour contrôler la sécurité électrique des équipements biomédicaux — de la mesure à l'interface.</p>
+        <div class="tags">
+          <span class="tag">ESP32</span><span class="tag">CEI 62353</span><span class="tag">Biomédical</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <span class="project-num">02 · OUTIL</span>
+        <h3>CodeScan</h3>
+        <p>CLI d'analyse statique de code en Python : parcours AST, détection de secrets par entropie de Shannon et vérification des dépendances via OSV.dev.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">AST</span><span class="tag">OSV.dev</span><span class="tag">Shannon</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <span class="project-num">03 · NLP</span>
+        <h3>Gbé Tché</h3>
+        <p>Système de traduction français–fon construit sur IBM Model 1 : 126 000+ paires de mots et 31 000 versets bibliques alignés. La technologie au service de la langue fon.</p>
+        <div class="tags">
+          <span class="tag">NLP</span><span class="tag">IBM Model 1</span><span class="tag">Français–Fon</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <span class="project-num">04 · PRODUIT</span>
+        <h3>EduSnap</h3>
+        <p>Plateforme vidéo éducative au format court, inspirée de TikTok : apprendre en scrollant. Développée en React Native avec Supabase pour le backend.</p>
+        <div class="tags">
+          <span class="tag">React Native</span><span class="tag">Supabase</span><span class="tag">Éducation</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <span class="project-num">05 · BUSINESS</span>
+        <h3>Business digital</h3>
+        <p>Packs réseaux sociaux et ebooks vendus en ligne : offre « De Zéro à 10 000 Abonnés » à 5 750 FCFA, ebook Facebook de 64 pages, campagnes Ads Facebook et funnel de vente construit en React/Vite.</p>
+        <div class="tags">
+          <span class="tag">Ebooks</span><span class="tag">Facebook Ads</span><span class="tag">Funnel</span><span class="tag">React/Vite</span>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <span class="project-num">06 · CRÉATION</span>
+        <h3>Sous le Masque</h3>
+        <p>Série web dramatique béninoise : bible créative complète, script de l'épisode 1 et 24 clips produits avec Canva. Le storytelling numérique au service de la culture béninoise.</p>
+        <div class="tags">
+          <span class="tag">Série web</span><span class="tag">Script</span><span class="tag">Canva</span><span class="tag">Culture béninoise</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="container contact-wrap">
+    <p class="section-label reveal">Contact</p>
+    <h2 class="section-title reveal">Travaillons ensemble</h2>
+    <p class="section-desc reveal">
+      Stage, mission de maintenance, projet web, collaboration sur l'IA appliquée aux langues locales ?
+      Je suis à Cotonou / Lokossa — et toujours joignable en ligne.
+    </p>
+    <div class="contact-cards reveal">
+      <a class="btn btn-primary" href="mailto:eudesjohn650@gmail.com">✉️ M'écrire</a>
+      <a class="btn btn-ghost" href="https://github.com/EudesJohn" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/eudes-johnson-djogo-15a316397" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Eudes Johnson DJOGO — Cotonou / Lokossa, Bénin</p>
+    <p class="flag">🟩🟨🟥</p>
+  </div>
+</footer>
+
+<script>
+  // Menu mobile
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navLinks.classList.remove('open'))
+  );
+
+  // Apparition au scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
