@@ -49,14 +49,3 @@ h3 {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* Bande tricolore béninoise */
-.tricolor {
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    var(--color-benin-green) 0 33.33%,
-    var(--color-benin-yellow) 33.33% 66.66%,
-    var(--color-benin-red) 66.66% 100%
-  );
-}
