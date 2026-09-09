@@ -101,10 +101,7 @@ export default function Home() {
 
             {/* Cube 3D décoratif */}
             <Reveal delay={200} className="hidden shrink-0 lg:block">
-              <div className="flex flex-col items-center gap-4">
-                <Cube3D />
-                <p className="font-mono text-xs text-fog">rotation 6 faces · 26s</p>
-              </div>
+              <Cube3D />
             </Reveal>
           </div>
 

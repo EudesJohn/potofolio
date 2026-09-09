@@ -23,6 +23,20 @@ export const SITE_TEXT_DEFAULTS: Record<string, string> = {
 };
 
 let cache: Record<string, string> | null = null;
+const listeners = new Set<(s: Record<string, string>) => void>();
+
+/** Force le rechargement des réglages pour tous les composants à l'écoute (après sauvegarde admin). */
+export function refreshSiteText() {
+  cache = null;
+  getSiteSettings()
+    .then(s => {
+      cache = s;
+      listeners.forEach(fn => fn(s));
+    })
+    .catch(() => {
+      /* silencieux */
+    });
+}
 
 /**
  * Hook des textes éditables du site.
@@ -32,15 +46,28 @@ export function useSiteText() {
   const [texts, setTexts] = useState<Record<string, string>>(cache ?? {});
 
   useEffect(() => {
-    if (cache) return;
+    const update = (s: Record<string, string>) => setTexts(s);
+    listeners.add(update);
+
+    if (cache) {
+      setTexts(cache);
+      return () => listeners.delete(update);
+    }
+
+    let alive = true;
     getSiteSettings()
       .then(s => {
         cache = s;
-        setTexts(s);
+        if (alive) setTexts(s);
       })
       .catch(() => {
         /* silencieux : les défauts suffisent */
       });
+
+    return () => {
+      alive = false;
+      listeners.delete(update);
+    };
   }, []);
 
   return (key: string): string => texts[key] ?? SITE_TEXT_DEFAULTS[key] ?? '';

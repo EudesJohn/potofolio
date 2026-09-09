@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { getSiteSettings, updateSiteSettings, uploadProjectImage } from '../../lib/api';
-import { SITE_TEXT_DEFAULTS } from '../../lib/siteText';
+import { SITE_TEXT_DEFAULTS, refreshSiteText } from '../../lib/siteText';
 
 const FIELDS: { key: string; label: string; multiline?: boolean }[] = [
   { key: 'home_badge', label: 'Badge d’accueil (héro)' },
@@ -86,6 +86,36 @@ export default function AdminSettings() {
     });
   }
 
+  /** Remplace une diapositive par un fichier envoyé. */
+  async function replaceSlideWithFile(index: number, file: File | undefined) {
+    if (!file) return;
+    setUploading('slide');
+    setErrorMsg('');
+    try {
+      const url = await uploadProjectImage(file);
+      setValues(v => {
+        const slides = parseSlides(v.hero_slides);
+        slides[index] = url;
+        return { ...v, hero_slides: JSON.stringify(slides) };
+      });
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Échec de l’envoi');
+    } finally {
+      setUploading(null);
+    }
+  }
+
+  /** Déplace une diapositive vers la gauche (ordre d'affichage). */
+  function moveSlide(index: number, dir: -1 | 1) {
+    setValues(v => {
+      const slides = parseSlides(v.hero_slides);
+      const target = index + dir;
+      if (target < 0 || target >= slides.length) return v;
+      [slides[index], slides[target]] = [slides[target], slides[index]];
+      return { ...v, hero_slides: JSON.stringify(slides) };
+    });
+  }
+
   function addSlideUrl() {
     if (!newSlide.trim()) return;
     setValues(v => {
@@ -95,12 +125,17 @@ export default function AdminSettings() {
     setNewSlide('');
   }
 
+  function removeLogoImage() {
+    setValues(v => ({ ...v, logo_image: '' }));
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setStatus('saving');
     setErrorMsg('');
     try {
       await updateSiteSettings(values);
+      refreshSiteText();
       setStatus('saved');
       setTimeout(() => setStatus('idle'), 2500);
     } catch (err) {
@@ -157,7 +192,10 @@ export default function AdminSettings() {
                     <input
                       type="file"
                       accept="image/png,image/jpeg,image/webp,image/svg+xml"
-                      onChange={e => upload(e.target.files?.[0], 'logo')}
+                      onChange={e => {
+                        upload(e.target.files?.[0], 'logo');
+                        e.target.value = '';
+                      }}
                       className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-night hover:file:bg-[#00a462]"
                     />
                     <input
@@ -166,6 +204,15 @@ export default function AdminSettings() {
                       placeholder="…ou collez une URL d'image (vide = logo texte)"
                       className={`${inputCls} text-xs`}
                     />
+                    {values.logo_image && (
+                      <button
+                        type="button"
+                        onClick={removeLogoImage}
+                        className="rounded-lg border border-edge px-3 py-1 text-xs transition hover:border-benin-red hover:text-benin-red"
+                      >
+                        Supprimer l'image (revenir au logo texte)
+                      </button>
+                    )}
                   </div>
                 </div>
                 {uploading === 'logo' && <p className="mt-2 text-xs text-benin-yellow">Envoi…</p>}
@@ -178,22 +225,69 @@ export default function AdminSettings() {
             <h2 className="font-display font-semibold">Diaporama d'arrière-plan (héro)</h2>
             <p className="mt-1 text-xs text-fog">
               Les images défilent en fondu derrière la page d'accueil. Ordre = ordre d'affichage.
-            </p>
-
-            <ul className="mt-4 space-y-2">
-              {slides.map((src, i) => (
-                <li key={src + i} className="flex items-center gap-3 rounded-xl bg-panel2 p-2">
-                  <img src={src} alt={`Diapositive ${i + 1}`} className="h-12 w-20 rounded-lg object-cover" />
-                  <span className="min-w-0 flex-1 truncate text-xs text-fog">{src}</span>
-                  <button
-                    type="button"
-                    onClick={() => removeSlide(i)}
-                    className="rounded-lg border border-edge px-3 py-1 text-xs transition hover:border-benin-red hover:text-benin-red"
-                  >
-                    Retirer
-                  </button>
-                </li>
-              ))}
+            </p>              <ul className="mt-4 space-y-2">
+                {slides.map((src, i) => (
+                  <li key={src + i} className="rounded-xl bg-panel2 p-2">
+                    <div className="flex items-center gap-3">
+                      <img src={src} alt={`Diapositive ${i + 1}`} className="h-12 w-20 rounded-lg object-cover" />
+                      <span className="min-w-0 flex-1 truncate text-xs text-fog">{src.split('/').pop()}</span>
+                      <div className="flex shrink-0 items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => moveSlide(i, -1)}
+                          disabled={i === 0}
+                          aria-label="Déplacer vers le début"
+                          className="rounded-lg border border-edge px-2 py-1 text-xs transition hover:border-benin-bright hover:text-benin-bright disabled:opacity-30"
+                        >
+                          ←
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => moveSlide(i, 1)}
+                          disabled={i === slides.length - 1}
+                          aria-label="Déplacer vers la fin"
+                          className="rounded-lg border border-edge px-2 py-1 text-xs transition hover:border-benin-bright hover:text-benin-bright disabled:opacity-30"
+                        >
+                          →
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeSlide(i)}
+                          className="rounded-lg border border-edge px-3 py-1 text-xs transition hover:border-benin-red hover:text-benin-red"
+                        >
+                          Retirer
+                        </button>
+                      </div>
+                    </div>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                      <label className="cursor-pointer rounded-lg border border-edge px-3 py-1 text-xs transition hover:border-benin-bright hover:text-benin-bright">
+                        {uploading === 'slide' ? 'Envoi…' : 'Remplacer la photo'}
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                          className="hidden"
+                          onChange={e => {
+                            replaceSlideWithFile(i, e.target.files?.[0]);
+                            e.target.value = '';
+                          }}
+                        />
+                      </label>
+                      <input
+                        value={src}
+                        onChange={e => {
+                          const url = e.target.value;
+                          setValues(v => {
+                            const s = parseSlides(v.hero_slides);
+                            s[i] = url;
+                            return { ...v, hero_slides: JSON.stringify(s) };
+                          });
+                        }}
+                        placeholder="…ou collez une URL d'image"
+                        className="min-w-0 flex-1 rounded-lg border border-edge bg-night px-3 py-1.5 text-xs outline-none transition focus:border-benin-bright"
+                      />
+                    </div>
+                  </li>
+                ))}
               {slides.length === 0 && (
                 <li className="text-sm text-fog">Aucune image — les diapositives par défaut seront utilisées.</li>
               )}
