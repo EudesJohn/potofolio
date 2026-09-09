@@ -36,8 +36,10 @@ export default function Navbar() {
 
           {/* Menu mobile */}
           <details className="relative md:hidden">
-            <summary className="cursor-pointer list-none text-2xl leading-none text-ink">
-              ☰
+            <summary className="cursor-pointer list-none" aria-label="Menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-6 w-6 text-ink" aria-hidden>
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </summary>
             <ul className="absolute right-0 top-10 w-48 rounded-xl border border-edge bg-panel p-2 shadow-xl">
               {links.map(l => (

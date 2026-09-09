@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react';
 import { sendMessage } from '../lib/api';
+import { useSiteText } from '../lib/siteText';
 import Reveal from '../components/Reveal';
 
 export default function Contact() {
+  const t = useSiteText();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
@@ -39,7 +41,7 @@ export default function Contact() {
     <div className="mx-auto max-w-6xl px-6 py-20">
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-widest text-benin-bright">Contact</p>
-        <h1 className="mt-2 font-display text-4xl font-bold">Travaillons ensemble</h1>
+        <h1 className="mt-2 font-display text-4xl font-bold">{t('cta_title')}</h1>
         <p className="mt-3 max-w-2xl text-fog">
           Stage, mission de maintenance, projet web, collaboration sur l'IA appliquée aux langues
           locales ? Laissez-moi un message — je réponds rapidement.
@@ -50,33 +52,35 @@ export default function Contact() {
         <Reveal>
           <div className="space-y-4">
             <a
-              href="mailto:eudesjohn650@gmail.com"
+              href={`mailto:${t('contact_email')}`}
               className="block rounded-2xl border border-edge bg-panel p-5 transition hover:border-benin-green"
             >
-              <b className="font-display">✉️ Email</b>
-              <p className="mt-1 text-sm text-fog">eudesjohn650@gmail.com</p>
+              <b className="font-display">Email</b>
+              <p className="mt-1 text-sm text-fog">{t('contact_email')}</p>
             </a>
             <a
-              href="https://github.com/EudesJohn"
+              href={t('contact_github')}
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-2xl border border-edge bg-panel p-5 transition hover:border-benin-green"
             >
               <b className="font-display">GitHub</b>
-              <p className="mt-1 text-sm text-fog">github.com/EudesJohn</p>
+              <p className="mt-1 text-sm text-fog">{t('contact_github').replace('https://', '')}</p>
             </a>
             <a
-              href="https://www.linkedin.com/in/eudes-johnson-djogo-15a316397"
+              href={t('contact_linkedin')}
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-2xl border border-edge bg-panel p-5 transition hover:border-benin-green"
             >
               <b className="font-display">LinkedIn</b>
-              <p className="mt-1 text-sm text-fog">eudes-johnson-djogo</p>
+              <p className="mt-1 text-sm text-fog">
+                {t('contact_linkedin').replace('https://www.linkedin.com/in/', '')}
+              </p>
             </a>
             <div className="rounded-2xl border border-edge bg-panel p-5">
-              <b className="font-display">📍 Localisation</b>
-              <p className="mt-1 text-sm text-fog">Cotonou / Lokossa, Bénin</p>
+              <b className="font-display">Localisation</b>
+              <p className="mt-1 text-sm text-fog">{t('contact_location')}</p>
             </div>
           </div>
         </Reveal>
@@ -84,8 +88,11 @@ export default function Contact() {
         <Reveal delay={150}>
           {status === 'sent' ? (
             <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-benin-green/40 bg-benin-green/10 p-10 text-center">
-              <p className="text-4xl">✅</p>
-              <h2 className="mt-4 font-display text-xl font-semibold">Message envoyé !</h2>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-10 w-10 text-benin-bright" aria-hidden>
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <h2 className="mt-4 font-display text-xl font-semibold">Message envoyé</h2>
               <p className="mt-2 text-sm text-fog">Merci, je vous répondrai très vite.</p>
               <button
                 onClick={() => setStatus('idle')}

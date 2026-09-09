@@ -12,8 +12,30 @@ create table if not exists public.projects (
   description text not null,
   tags text[] not null default '{}',
   link text,
+  preview text,
   display_order int not null default 0,
   published boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.page_views (
+  id uuid primary key default gen_random_uuid(),
+  path text not null default '/',
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.metrics (
+  id uuid primary key default gen_random_uuid(),
+  label text not null,
+  unit text not null default '',
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.metric_points (
+  id uuid primary key default gen_random_uuid(),
+  metric_id uuid not null references public.metrics(id) on delete cascade,
+  value numeric not null,
+  point_date date not null default current_date,
   created_at timestamptz not null default now()
 );
 
@@ -47,6 +69,16 @@ create table if not exists public.site_settings (
 create index if not exists projects_order_idx on public.projects (display_order);
 create index if not exists skills_order_idx on public.skills (display_order);
 create index if not exists messages_created_idx on public.messages (created_at desc);
+create index if not exists page_views_created_idx on public.page_views (created_at desc);
+
+-- Vue : visites par jour (pour les graphiques de l'admin)
+create or replace view public.page_views_per_day as
+  select current_date - i as day, count(pv.id)::int as count
+  from generate_series(0, 90) i
+  left join public.page_views pv
+    on pv.created_at::date = current_date - i
+  group by 1
+  order by 1;
 
 -- ---------- RLS ----------
 
@@ -54,6 +86,23 @@ alter table public.projects enable row level security;
 alter table public.skills enable row level security;
 alter table public.messages enable row level security;
 alter table public.site_settings enable row level security;
+alter table public.page_views enable row level security;
+alter table public.metrics enable row level security;
+alter table public.metric_points enable row level security;
+
+create policy "Anyone can track view"
+  on public.page_views for insert
+  with check (true);
+
+create policy "Admin metrics"
+  on public.metrics for all
+  using (auth.uid() is not null)
+  with check (auth.uid() is not null);
+
+create policy "Admin metric points"
+  on public.metric_points for all
+  using (auth.uid() is not null)
+  with check (auth.uid() is not null);
 
 -- Lecture publique
 create policy "Public read projects"
@@ -125,15 +174,15 @@ insert into public.projects (title, category, description, tags, display_order, 
 on conflict do nothing;
 
 insert into public.skills (icon, title, tags, display_order) values
-  ('🌐', 'Développement web full-stack',
+  ('web', 'Développement web full-stack',
    array['React','Node.js','Vite','Firebase','Supabase','Vercel','React Native'], 1),
-  ('🔧', 'Maintenance & biomédical',
+  ('wrench', 'Maintenance & biomédical',
    array['Équipements biomédicaux','Maintenance industrielle','CEI 62353','ESP32','Sécurité électrique'], 2),
-  ('🐍', 'Python & données',
+  ('code', 'Python & données',
    array['ReportLab','python-docx','AST','NLP / statistiques','IBM Model 1'], 3),
-  ('🤖', 'IA & outils en local',
+  ('chip', 'IA & outils en local',
    array['Claude Code (VS Code)','Codex CLI (DeepSeek V4 Flash)','Ollama','Gemma4:e2b','Qwen2.5-Coder:3b'], 4),
-  ('💼', 'Entrepreneuriat digital',
+  ('chart', 'Entrepreneuriat digital',
    array['Packs réseaux sociaux','Ebooks','Facebook Ads','Funnels de vente','Marketing de contenu'], 5)
 on conflict do nothing;
 

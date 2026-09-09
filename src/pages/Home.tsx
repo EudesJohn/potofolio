@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getProjects, getSkills, type Project, type Skill } from '../lib/api';
+import { useSiteText } from '../lib/siteText';
 import Reveal from '../components/Reveal';
 import BgSlideshow from '../components/BgSlideshow';
 import TiltCard from '../components/TiltCard';
 import Cube3D from '../components/Cube3D';
+import SkillIcon from '../components/SkillIcon';
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
+  const t = useSiteText();
 
   useEffect(() => {
     getProjects().then(setProjects).catch(console.error);
@@ -35,21 +38,19 @@ export default function Home() {
               <Reveal>
                 <span className="inline-flex items-center gap-2 rounded-full border border-edge bg-panel2/80 px-4 py-1.5 text-xs text-fog">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-benin-bright" />
-                  Disponible pour collaborations · Cotonou / Lokossa, Bénin
+                  {t('home_badge')}
                 </span>
               </Reveal>
 
               <Reveal delay={100}>
-                <h1 className="mt-6 font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-                  Eudes Johnson
-                  <br />
-                  DJOGO<span className="text-benin-bright">.</span>
+                <h1 className="mt-6 whitespace-pre-line font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+                  {t('hero_title')}
                 </h1>
               </Reveal>
 
               <Reveal delay={200}>
                 <p className="mt-4 font-display text-lg font-medium text-benin-yellow md:text-2xl">
-                  Technicien de maintenance biomédicale &amp; Entrepreneur digital
+                  {t('hero_subtitle')}
                 </p>
               </Reveal>
 
@@ -117,20 +118,19 @@ export default function Home() {
             {featured.map((p, i) => (
               <Reveal key={p.id} delay={i * 100}>
                 <TiltCard className="h-full">
-                  <Link
-                    to="/projets"
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-edge bg-panel transition hover:border-benin-green"
-                  >
+                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-edge bg-panel transition hover:border-benin-green">
                     <div className="aspect-[16/9] overflow-hidden border-b border-edge bg-panel2">
-                      {p.link ? (
+                      {p.preview ? (
                         <img
-                          src={p.link}
+                          src={p.preview}
                           alt={`Aperçu du projet ${p.title}`}
                           loading="lazy"
                           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="flex h-full items-center justify-center text-3xl">📁</div>
+                        <div className="flex h-full items-center justify-center font-display text-4xl text-benin-bright/40">
+                          {p.title.charAt(0)}
+                        </div>
                       )}
                     </div>
                     <div className="flex flex-1 flex-col p-6">
@@ -140,17 +140,27 @@ export default function Home() {
                       <h3 className="mt-2 font-display text-lg font-semibold">{p.title}</h3>
                       <p className="mt-2 flex-1 text-sm text-fog">{p.description}</p>
                       <div className="mt-4 flex flex-wrap gap-2">
-                        {p.tags.slice(0, 3).map(t => (
+                        {p.tags.slice(0, 3).map(tag => (
                           <span
-                            key={t}
+                            key={tag}
                             className="rounded-full border border-edge bg-panel2 px-2.5 py-0.5 text-xs text-fog"
                           >
-                            {t}
+                            {tag}
                           </span>
                         ))}
                       </div>
+                      {p.link && (
+                        <a
+                          href={p.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-benin-bright hover:underline"
+                        >
+                          Voir le projet →
+                        </a>
+                      )}
                     </div>
-                  </Link>
+                  </article>
                 </TiltCard>
               </Reveal>
             ))}
@@ -179,15 +189,15 @@ export default function Home() {
               <Reveal key={s.id} delay={i * 80}>
                 <TiltCard className="h-full">
                   <div className="h-full rounded-2xl border border-edge bg-panel p-6 transition hover:border-benin-green">
-                    <div className="text-2xl">{s.icon}</div>
+                    <SkillIcon name={s.icon} />
                     <h3 className="mt-3 font-display font-semibold">{s.title}</h3>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {s.tags.map(t => (
+                      {s.tags.map(tag => (
                         <span
-                          key={t}
+                          key={tag}
                           className="rounded-full border border-edge bg-panel2 px-2.5 py-0.5 text-xs text-fog"
                         >
-                          {t}
+                          {tag}
                         </span>
                       ))}
                     </div>
@@ -203,7 +213,7 @@ export default function Home() {
       <section className="border-t border-edge">
         <div className="mx-auto max-w-6xl px-6 py-20 text-center">
           <Reveal>
-            <h2 className="font-display text-3xl font-bold">Travaillons ensemble</h2>
+            <h2 className="font-display text-3xl font-bold">{t('cta_title')}</h2>
             <p className="mx-auto mt-3 max-w-xl text-fog">
               Stage, mission de maintenance, projet web ou collaboration sur l'IA appliquée aux
               langues locales — je suis à Cotonou / Lokossa, et toujours joignable en ligne.

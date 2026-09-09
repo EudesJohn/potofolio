@@ -1,6 +1,14 @@
 import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
+const NAV_ITEMS = [
+  { to: '/eudes/-/admin', label: 'Tableau de bord', end: true },
+  { to: '/eudes/-/admin/projets', label: 'Projets', end: false },
+  { to: '/eudes/-/admin/messages', label: 'Messages', end: false },
+  { to: '/eudes/-/admin/progression', label: 'Progression', end: false },
+  { to: '/eudes/-/admin/reglages', label: 'Réglages', end: false },
+];
+
 export default function AdminLayout() {
   const { session, signOut } = useAuth();
   const navigate = useNavigate();
@@ -42,21 +50,13 @@ export default function AdminLayout() {
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-8 px-6 py-8 md:flex-row">
         <nav className="md:w-56 md:shrink-0">
           <ul className="flex gap-2 md:flex-col">
-            <li className="flex-1 md:flex-none">
-              <NavLink to="/eudes/-/admin" end className={navCls}>
-                📊 Tableau de bord
-              </NavLink>
-            </li>
-            <li className="flex-1 md:flex-none">
-              <NavLink to="/eudes/-/admin/projets" className={navCls}>
-                📁 Projets
-              </NavLink>
-            </li>
-            <li className="flex-1 md:flex-none">
-              <NavLink to="/eudes/-/admin/messages" className={navCls}>
-                ✉️ Messages
-              </NavLink>
-            </li>
+            {NAV_ITEMS.map(item => (
+              <li key={item.to} className="flex-1 md:flex-none">
+                <NavLink to={item.to} end={item.end} className={navCls}>
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
 

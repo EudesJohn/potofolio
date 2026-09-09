@@ -11,6 +11,8 @@ import AdminLayout from './pages/admin/AdminLayout';
 import Dashboard from './pages/admin/Dashboard';
 import AdminProjects from './pages/admin/AdminProjects';
 import AdminMessages from './pages/admin/AdminMessages';
+import AdminProgress from './pages/admin/AdminProgress';
+import AdminSettings from './pages/admin/AdminSettings';
 
 function NotFound() {
   return (
@@ -47,6 +49,8 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="projets" element={<AdminProjects />} />
         <Route path="messages" element={<AdminMessages />} />
+        <Route path="progression" element={<AdminProgress />} />
+        <Route path="reglages" element={<AdminSettings />} />
       </Route>
     </Routes>
   );

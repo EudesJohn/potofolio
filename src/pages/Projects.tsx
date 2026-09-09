@@ -44,15 +44,17 @@ export default function Projects() {
             <TiltCard className="h-full">
               <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-edge bg-panel transition hover:border-benin-green">
                 <div className="aspect-[16/9] overflow-hidden border-b border-edge bg-panel2">
-                  {p.link ? (
+                  {p.preview ? (
                     <img
-                      src={p.link}
+                      src={p.preview}
                       alt={`Aperçu du projet ${p.title}`}
                       loading="lazy"
                       className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-4xl">📁</div>
+                    <div className="flex h-full items-center justify-center font-display text-5xl text-benin-bright/40">
+                      {p.title.charAt(0)}
+                    </div>
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-6">
@@ -62,12 +64,12 @@ export default function Projects() {
                   <h2 className="mt-2 font-display text-xl font-semibold">{p.title}</h2>
                   <p className="mt-2 flex-1 text-sm text-fog">{p.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {p.tags.map(t => (
+                    {p.tags.map(tag => (
                       <span
-                        key={t}
+                        key={tag}
                         className="rounded-full border border-edge bg-panel2 px-2.5 py-0.5 text-xs text-fog"
                       >
-                        {t}
+                        {tag}
                       </span>
                     ))}
                   </div>

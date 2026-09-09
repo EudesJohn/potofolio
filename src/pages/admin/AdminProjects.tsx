@@ -4,6 +4,7 @@ import {
   createProject,
   updateProject,
   deleteProject,
+  uploadProjectImage,
   type Project,
 } from '../../lib/api';
 
@@ -13,6 +14,7 @@ interface Draft {
   description: string;
   tags: string;
   link: string;
+  preview: string;
   display_order: number;
   published: boolean;
 }
@@ -23,6 +25,7 @@ const emptyDraft: Draft = {
   description: '',
   tags: '',
   link: '',
+  preview: '',
   display_order: 10,
   published: true,
 };
@@ -34,6 +37,7 @@ function toDraft(p: Project): Draft {
     description: p.description,
     tags: p.tags.join(', '),
     link: p.link ?? '',
+    preview: p.preview ?? '',
     display_order: p.display_order,
     published: p.published,
   };
@@ -47,6 +51,7 @@ export default function AdminProjects() {
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   async function load() {
     try {
@@ -89,6 +94,7 @@ export default function AdminProjects() {
         .map(t => t.trim())
         .filter(Boolean),
       link: draft.link || null,
+      preview: draft.preview || null,
       display_order: Number(draft.display_order) || 0,
       published: draft.published,
     };
@@ -116,6 +122,20 @@ export default function AdminProjects() {
       await load();
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Erreur lors de la suppression');
+    }
+  }
+
+  async function handleUpload(file: File | undefined) {
+    if (!file) return;
+    setUploading(true);
+    setError('');
+    try {
+      const url = await uploadProjectImage(file);
+      setDraft(d => ({ ...d, preview: url }));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Échec de l’envoi de l’image');
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -182,11 +202,43 @@ export default function AdminProjects() {
             placeholder="Tags séparés par des virgules (ex. React, ESP32, Python)"
             className={inputCls}
           />
+
+          {/* Image d'aperçu */}
+          <div className="rounded-xl border border-edge bg-panel2 p-4">
+            <label className="mb-2 block text-xs font-medium text-fog">Image d'aperçu du projet</label>
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="h-24 w-40 overflow-hidden rounded-lg border border-edge bg-night">
+                {draft.preview ? (
+                  <img src={draft.preview} alt="Aperçu" className="h-full w-full object-cover" />
+                ) : (
+                  <div className="flex h-full items-center justify-center font-display text-2xl text-benin-bright/40">
+                    {draft.title.charAt(0) || '—'}
+                  </div>
+                )}
+              </div>
+              <div className="flex-1 space-y-2">
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                  onChange={e => handleUpload(e.target.files?.[0])}
+                  className="block w-full text-xs text-fog file:mr-3 file:rounded-lg file:border-0 file:bg-benin-green file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-[#00a462]"
+                />
+                <input
+                  value={draft.preview}
+                  onChange={e => setDraft({ ...draft, preview: e.target.value })}
+                  placeholder="…ou collez une URL d'image"
+                  className={`${inputCls} text-xs`}
+                />
+                {uploading && <p className="text-xs text-benin-yellow">Envoi de l'image…</p>}
+              </div>
+            </div>
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-3">
             <input
               value={draft.link}
               onChange={e => setDraft({ ...draft, link: e.target.value })}
-              placeholder="Lien (optionnel)"
+              placeholder="Lien réel du projet (GitHub, démo…)"
               className={inputCls}
             />
             <input

@@ -7,8 +7,8 @@
   <text x="24" y="150" fill="#9db3a6" font-family="monospace" font-size="14" opacity="0.75">→ Entropie de Shannon : 3 secrets détectés</text>
   <text x="24" y="180" fill="#fcd116" font-family="monospace" font-size="14" opacity="0.85">! api_key = "sk-..."  (entropie 4.82)</text>
   <text x="24" y="210" fill="#9db3a6" font-family="monospace" font-size="14" opacity="0.75">→ OSV.dev : 1 vulnérabilité (lodash 4.17.20)</text>
-  <text x="24" y="240" fill="#e8112d" font-family="monospace" font-size="14">✗ CVE-2020-8203 · HIGH</text>
-  <text x="24" y="280" fill="#22c55e" font-family="monospace" font-size="15">✓ Scan terminé en 2.4s</text>
+  <text x="24" y="240" fill="#e8112d" font-family="monospace" font-size="14">[X] CVE-2020-8203 · HIGH</text>
+  <text x="24" y="280" fill="#22c55e" font-family="monospace" font-size="15">[OK] Scan terminé en 2.4s</text>
   <rect x="24" y="310" width="200" height="34" rx="8" fill="#008751"/>
   <text x="44" y="332" fill="#ffffff" font-family="monospace" font-size="13">Rapport PDF (ReportLab)</text>
   <rect x="24" y="368" width="752" height="50" rx="8" fill="#131c16" stroke="#22322a"/>
