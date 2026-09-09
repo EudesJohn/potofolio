@@ -33,15 +33,6 @@ export default function Navbar() {
                 </NavLink>
               </li>
             ))}
-            <li>
-              <Link
-                to="/admin/login"
-                className="rounded-lg border border-edge px-3 py-1.5 text-sm text-fog transition-colors hover:border-benin-bright hover:text-benin-bright"
-                title="Administration"
-              >
-                Admin
-              </Link>
-            </li>
           </ul>
 
           {/* Menu mobile */}
@@ -66,11 +57,6 @@ export default function Navbar() {
                   </NavLink>
                 </li>
               ))}
-              <li className="mt-1 border-t border-edge pt-1">
-                <Link to="/admin/login" className="block rounded-lg px-3 py-2 text-sm text-fog hover:bg-panel2">
-                  Admin
-                </Link>
-              </li>
             </ul>
           </details>
         </div>
