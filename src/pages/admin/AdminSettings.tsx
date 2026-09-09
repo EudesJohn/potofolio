@@ -8,10 +8,19 @@ const FIELDS: { key: string; label: string; multiline?: boolean }[] = [
   { key: 'hero_subtitle', label: 'Sous-titre du héro' },
   { key: 'cta_title', label: 'Titre de l’appel à l’action' },
   { key: 'footer_note', label: 'Note du pied de page' },
-  { key: 'contact_email', label: 'Email de contact' },
-  { key: 'contact_github', label: 'Lien GitHub' },
-  { key: 'contact_linkedin', label: 'Lien LinkedIn' },
-  { key: 'contact_location', label: 'Localisation' },
+];
+
+const ABOUT_FIELDS: { key: string; label: string; hint?: string }[] = [
+  { key: 'about_title', label: 'Titre de la page À propos (retour à la ligne possible)' },
+  {
+    key: 'about_paragraphs',
+    label: 'Paragraphes (séparez chaque paragraphe par une ligne vide)',
+    hint: 'Entourez un mot de ** doubles étoiles ** pour le mettre en gras.',
+  },
+  {
+    key: 'about_facts',
+    label: 'Profil en bref (une ligne par élément : Libellé | Valeur)',
+  },
 ];
 
 function parseSlides(raw: string | undefined): string[] {
@@ -236,6 +245,43 @@ export default function AdminSettings() {
                     className={inputCls}
                   />
                 )}
+              </div>
+            ))}
+          </section>
+
+          {/* ---------- Page À propos ---------- */}
+          <section className="space-y-4">
+            <h2 className="font-display font-semibold">Page « À propos »</h2>
+            {ABOUT_FIELDS.map(f => (
+              <div key={f.key}>
+                <label className="mb-1 block text-xs font-medium text-fog">{f.label}</label>
+                {f.hint && <p className="mb-1 text-xs text-fog/60">{f.hint}</p>}
+                <textarea
+                  rows={f.key === 'about_facts' ? 7 : f.key === 'about_paragraphs' ? 10 : 2}
+                  value={values[f.key] ?? ''}
+                  onChange={e => setValues({ ...values, [f.key]: e.target.value })}
+                  className={inputCls}
+                />
+              </div>
+            ))}
+          </section>
+
+          {/* ---------- Contacts (inchangés mais regroupés) ---------- */}
+          <section className="space-y-4">
+            <h2 className="font-display font-semibold">Contacts & liens</h2>
+            {[
+              { key: 'contact_email', label: 'Email de contact' },
+              { key: 'contact_github', label: 'Lien GitHub' },
+              { key: 'contact_linkedin', label: 'Lien LinkedIn' },
+              { key: 'contact_location', label: 'Localisation' },
+            ].map(f => (
+              <div key={f.key}>
+                <label className="mb-1 block text-xs font-medium text-fog">{f.label}</label>
+                <input
+                  value={values[f.key] ?? ''}
+                  onChange={e => setValues({ ...values, [f.key]: e.target.value })}
+                  className={inputCls}
+                />
               </div>
             ))}
           </section>
