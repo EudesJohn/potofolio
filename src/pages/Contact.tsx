@@ -35,14 +35,14 @@ export default function Contact() {
   }
 
   const inputCls =
-    'w-full rounded-xl border border-edge bg-panel2 px-4 py-3 text-sm text-ink placeholder:text-fog/50 outline-none transition focus:border-benin-bright';
+    'field w-full rounded-xl border border-edge bg-panel2 px-4 py-3 text-sm text-ink outline-none placeholder:text-fog/50';
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-20">
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-widest text-benin-bright">Contact</p>
-        <h1 className="mt-2 font-display text-4xl font-bold">{t('cta_title')}</h1>
-        <p className="mt-3 max-w-2xl text-fog">
+        <h1 className="gradient-text mt-2 font-display text-4xl font-bold">{t('cta_title')}</h1>
+        <p className="mt-3 max-w-2xl leading-relaxed text-fog">
           Stage, mission de maintenance, projet web, collaboration sur l'IA appliquée aux langues
           locales ? Laissez-moi un message — je réponds rapidement.
         </p>
@@ -53,28 +53,30 @@ export default function Contact() {
           <div className="space-y-4">
             <a
               href={`mailto:${t('contact_email')}`}
-              className="block rounded-2xl border border-edge bg-panel p-5 transition hover:border-benin-green"
+              className="glow-card block rounded-2xl border border-edge bg-panel p-5"
             >
               <b className="font-display">Email</b>
-              <p className="mt-1 text-sm text-fog">{t('contact_email')}</p>
+              <p className="mt-1 break-all text-sm text-fog">{t('contact_email')}</p>
             </a>
             <a
               href={t('contact_github')}
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-2xl border border-edge bg-panel p-5 transition hover:border-benin-green"
+              className="glow-card arrow-link block rounded-2xl border border-edge bg-panel p-5"
             >
               <b className="font-display">GitHub</b>
-              <p className="mt-1 text-sm text-fog">{t('contact_github').replace('https://', '')}</p>
+              <p className="mt-1 text-sm text-fog">
+                {t('contact_github').replace('https://', '')}
+              </p>
             </a>
             <a
               href={t('contact_linkedin')}
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-2xl border border-edge bg-panel p-5 transition hover:border-benin-green"
+              className="glow-card block rounded-2xl border border-edge bg-panel p-5"
             >
               <b className="font-display">LinkedIn</b>
-              <p className="mt-1 text-sm text-fog">
+              <p className="mt-1 break-all text-sm text-fog">
                 {t('contact_linkedin').replace('https://www.linkedin.com/in/', '')}
               </p>
             </a>
@@ -85,7 +87,7 @@ export default function Contact() {
           </div>
         </Reveal>
 
-        <Reveal delay={150}>
+        <Reveal delay={120}>
           {status === 'sent' ? (
             <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-benin-green/40 bg-benin-green/10 p-10 text-center">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-10 w-10 text-benin-bright" aria-hidden>
@@ -96,7 +98,7 @@ export default function Contact() {
               <p className="mt-2 text-sm text-fog">Merci, je vous répondrai très vite.</p>
               <button
                 onClick={() => setStatus('idle')}
-                className="mt-6 rounded-xl border border-edge px-5 py-2 text-sm transition hover:border-benin-bright hover:text-benin-bright"
+                className="btn-primary mt-6 rounded-xl border border-edge px-5 py-2 text-sm"
               >
                 Envoyer un autre message
               </button>
@@ -132,7 +134,7 @@ export default function Contact() {
                 value={body}
                 onChange={e => setBody(e.target.value)}
                 placeholder="Votre message…"
-                className={inputCls}
+                className={`${inputCls} resize-y`}
               />
               {status === 'error' && (
                 <p className="rounded-xl border border-benin-red/40 bg-benin-red/10 p-3 text-sm text-benin-red">
@@ -142,7 +144,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full rounded-xl bg-benin-green px-6 py-3 font-semibold text-white shadow-lg shadow-benin-green/30 transition hover:bg-[#00a462] disabled:opacity-50"
+                className="btn-primary w-full rounded-xl bg-benin-green px-6 py-3 font-semibold text-white shadow-lg shadow-benin-green/25 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {status === 'sending' ? 'Envoi…' : 'Envoyer le message'}
               </button>

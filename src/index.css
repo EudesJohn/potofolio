@@ -13,6 +13,18 @@
   --color-benin-red: #e8112d;
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
+  /* Courbes d'animation — ease-out fort, jamais d'ease-in sur l'UI */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -26,17 +38,40 @@ h3 {
   color: #fff;
 }
 
-/* Apparition au scroll */
+/* Scrollbar discrète et coordonnée au thème */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-night);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-edge);
+  border-radius: 8px;
+  border: 2px solid var(--color-night);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #33493d;
+}
+
+/* ---------- Apparition au scroll (transform + opacity uniquement) ---------- */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition:
-    opacity 0.6s ease,
-    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity 0.55s var(--ease-out-strong),
+    transform 0.55s var(--ease-out-strong);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ---------- Grain subtil par-dessus le fond ---------- */
+.grain {
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
 }
 
 /* ---------- Boutons avec feedback d'appui ---------- */
@@ -79,6 +114,51 @@ h3 {
   opacity: 1;
 }
 
+/* ---------- Lien de navigation : souligné animé ---------- */
+.nav-link {
+  position: relative;
+  transition: color 0.18s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-benin-bright), var(--color-benin-yellow));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s var(--ease-out-strong);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+.nav-link:hover {
+  color: var(--color-ink);
+}
+.nav-link.active {
+  color: var(--color-benin-bright);
+}
+
+/* ---------- Menu mobile : pop depuis le déclencheur ---------- */
+.menu-pop {
+  transform-origin: top right;
+  animation: menu-pop-in 0.18s var(--ease-out-strong);
+}
+@keyframes menu-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 /* ---------- Titres à gradient ---------- */
 .gradient-text {
   background: linear-gradient(100deg, #e8efe9 30%, #22c55e 75%, #fcd116 100%);
@@ -94,6 +174,35 @@ h3 {
 .tag:hover {
   border-color: rgba(34, 197, 94, 0.5);
   color: var(--color-benin-bright);
+}
+
+/* ---------- Lien flèche : la flèche glisse au survol ---------- */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.arrow-link .arrow {
+  transition: transform 0.2s var(--ease-out-strong);
+}
+.arrow-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Champs de formulaire : anneau au focus ---------- */
+.field {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field:focus {
+  border-color: var(--color-benin-bright);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+}
+
+/* ---------- Anneau de focus clavier (accessibilité) ---------- */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-benin-bright);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 /* ---------- Diaporama d'arrière-plan ---------- */
@@ -230,15 +339,25 @@ h3 {
   text-shadow: 0 0 32px rgba(34, 197, 94, 0.35);
 }
 
-/* ---------- Reduced motion ---------- */
+/* ---------- Reduced motion : moins d'animations, pas zéro ---------- */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .btn-primary,
   .glow-card::before,
   .tag,
   .stat-card,
   .chart-panel,
-  .tilt-card {
+  .tilt-card,
+  .field {
     transition: none;
+  }
+  .nav-link::after {
+    transition: none;
+  }
+  .menu-pop {
+    animation: none;
   }
   .btn-primary:hover {
     transform: none;
@@ -259,6 +378,9 @@ h3 {
     transform: none;
   }
   .bg-slide-active {
+    transform: none;
+  }
+  .arrow-link:hover .arrow {
     transform: none;
   }
 }

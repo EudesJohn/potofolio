@@ -5,7 +5,7 @@ import { useSiteText } from '../lib/siteText';
 function renderWithBold(text: string) {
   return text.split(/(\*\*[^*]+\*\*)/g).map((chunk, i) =>
     chunk.startsWith('**') && chunk.endsWith('**') ? (
-      <strong key={i} className="text-ink">
+      <strong key={i} className="font-semibold text-ink">
         {chunk.slice(2, -2)}
       </strong>
     ) : (
@@ -38,20 +38,22 @@ export default function About() {
         <p className="text-xs font-semibold uppercase tracking-widest text-benin-bright">
           À propos
         </p>
-        <h1 className="mt-2 whitespace-pre-line font-display text-4xl font-bold">{title}</h1>
+        <h1 className="gradient-text mt-2 whitespace-pre-line font-display text-4xl font-bold">
+          {title}
+        </h1>
       </Reveal>
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+      <div className="mt-12 grid gap-10 lg:grid-cols-[1.4fr_1fr]">
         <Reveal>
-          <div className="space-y-4 text-fog">
+          <div className="space-y-5 leading-relaxed text-fog">
             {paragraphs.map((p, i) => (
               <p key={i}>{renderWithBold(p)}</p>
             ))}
           </div>
         </Reveal>
 
-        <Reveal delay={150}>
-          <aside className="rounded-2xl border border-edge bg-panel p-6">
+        <Reveal delay={120}>
+          <aside className="glow-card rounded-2xl border border-edge bg-panel p-6 lg:sticky lg:top-24">
             <h2 className="font-display text-sm uppercase tracking-widest text-benin-yellow">
               Profil en bref
             </h2>
@@ -59,9 +61,10 @@ export default function About() {
               {facts.map(f => (
                 <li
                   key={f.b}
-                  className="border-b border-dashed border-edge py-2.5 text-sm text-fog last:border-0"
+                  className="border-b border-dashed border-edge py-3 text-sm last:border-0"
                 >
-                  <b className="font-semibold text-ink">{f.b}</b> {f.s}
+                  <b className="font-semibold text-ink">{f.b}</b>{' '}
+                  <span className="text-fog">{f.s}</span>
                 </li>
               ))}
             </ul>
