@@ -140,3 +140,13 @@ on conflict do nothing;
 insert into public.site_settings (key, value) values
   ('profile', '{"name": "Eudes Johnson DJOGO", "role": "Technicien de maintenance biomédicale & Entrepreneur digital", "location": "Cotonou / Lokossa, Bénin", "email": "eudesjohn650@gmail.com", "github": "https://github.com/EudesJohn", "linkedin": "https://www.linkedin.com/in/eudes-johnson-djogo-15a316397"}')
 on conflict (key) do nothing;
+
+-- ---------- MIGRATIONS ----------
+
+-- Lien de chaque projet (aperçus et boutons « Voir le projet »)
+update public.projects set link = '/previews/esp32-monitor.svg'  where title = 'Moniteur de sécurité électrique ESP32' and link is null;
+update public.projects set link = '/previews/codescan.svg'       where title = 'CodeScan' and link is null;
+update public.projects set link = '/previews/gbe-tche.svg'       where title = 'Gbé Tché' and link is null;
+update public.projects set link = '/previews/edusnap.svg'        where title = 'EduSnap' and link is null;
+update public.projects set link = '/previews/business-digital.svg' where title = 'Business digital' and link is null;
+update public.projects set link = '/previews/sous-le-masque.svg' where title = 'Sous le Masque' and link is null;

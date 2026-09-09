@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#0f1611"/>
+  <rect width="800" height="40" fill="#131c16"/>
+  <circle cx="20" cy="20" r="6" fill="#e8112d"/><circle cx="40" cy="20" r="6" fill="#fcd116"/><circle cx="60" cy="20" r="6" fill="#008751"/>
+  <rect x="70" y="80" width="300" height="330" rx="14" fill="#131c16" stroke="#22322a"/>
+  <rect x="90" y="100" width="260" height="140" rx="8" fill="#0c221a"/>
+  <text x="220" y="180" fill="#fcd116" font-family="Arial, sans-serif" font-size="26" font-weight="bold" text-anchor="middle">0 → 10 000</text>
+  <text x="220" y="205" fill="#9db3a6" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">abonnés</text>
+  <rect x="90" y="260" width="260" height="36" rx="8" fill="#008751"/>
+  <text x="220" y="284" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Pack complet · 5 750 FCFA</text>
+  <rect x="90" y="312" width="260" height="30" rx="6" fill="#1a2c22"/>
+  <text x="102" y="332" fill="#9db3a6" font-family="Arial, sans-serif" font-size="11">✓ Ebook Facebook 64 pages</text>
+  <rect x="90" y="350" width="260" height="30" rx="6" fill="#1a2c22"/>
+  <text x="102" y="370" fill="#9db3a6" font-family="Arial, sans-serif" font-size="11">✓ Stratégie Ads &amp; contenu</text>
+  <rect x="420" y="80" width="310" height="330" rx="14" fill="#131c16" stroke="#22322a"/>
+  <text x="440" y="115" fill="#e8efe9" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Funnel de vente</text>
+  <g fill="none" stroke="#22c55e" stroke-width="2">
+    <path d="M440 140 h120 l24 22 24 -22 h100"/>
+  </g>
+  <text x="440" y="180" fill="#9db3a6" font-family="Arial, sans-serif" font-size="12">1. Pub Facebook →</text>
+  <text x="440" y="210" fill="#9db3a6" font-family="Arial, sans-serif" font-size="12">2. Landing page React/Vite →</text>
+  <text x="440" y="240" fill="#9db3a6" font-family="Arial, sans-serif" font-size="12">3. Page de vente 5 750 FCFA →</text>
+  <text x="440" y="270" fill="#9db3a6" font-family="Arial, sans-serif" font-size="12">4. Paiement Mobile Money →</text>
+  <text x="440" y="300" fill="#9db3a6" font-family="Arial, sans-serif" font-size="12">5. Livraison ebook + pack</text>
+  <rect x="440" y="330" width="130" height="34" rx="8" fill="#008751"/>
+  <text x="505" y="352" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Acheter</text>
+</svg>

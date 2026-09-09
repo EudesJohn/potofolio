@@ -49,3 +49,106 @@ h3 {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ---------- Diaporama d'arrière-plan ---------- */
+.bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1);
+  transition:
+    opacity 1.2s ease,
+    transform 6.5s linear;
+}
+.bg-slide-active {
+  opacity: 1;
+  transform: scale(1.07);
+
+@starting-style {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* ---------- Cartes 3D ---------- */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+/* ---------- Cube 3D ---------- */
+.cube-scene {
+  width: 130px;
+  height: 130px;
+  perspective: 800px;
+}
+
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: cube-spin 26s linear infinite;
+}
+
+.cube-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  background: rgba(19, 28, 22, 0.92);
+  border: 1px solid var(--color-edge);
+  border-radius: 14px;
+  backface-visibility: hidden;
+  box-shadow: inset 0 0 40px rgba(0, 135, 81, 0.15);
+}
+
+.cube-face-front {
+  transform: translateZ(65px);
+}
+.cube-face-back {
+  transform: rotateY(180deg) translateZ(65px);
+}
+.cube-face-right {
+  transform: rotateY(90deg) translateZ(65px);
+}
+.cube-face-left {
+  transform: rotateY(-90deg) translateZ(65px);
+  backface-visibility: visible;
+}
+
+.cube-face-top {
+  transform: rotateX(90deg) translateZ(65px);
+}
+.cube-face-bottom {
+  transform: rotateX(-90deg) translateZ(65px);
+}
+
+@keyframes cube-spin {
+  from {
+    transform: rotateX(-12deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(-12deg) rotateY(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cube {
+    animation: none;
+    transform: rotateX(-12deg) rotateY(-24deg);
+  }
+  .bg-slide {
+    transition: opacity 1.2s ease;
+    transform: none;
+  }
+  .tilt-card {
+    transition: none;
+  }
+}
+

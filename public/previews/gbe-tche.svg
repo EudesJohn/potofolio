@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#0f1611"/>
+  <rect width="800" height="40" fill="#131c16"/>
+  <circle cx="20" cy="20" r="6" fill="#e8112d"/><circle cx="40" cy="20" r="6" fill="#fcd116"/><circle cx="60" cy="20" r="6" fill="#008751"/>
+  <circle cx="640" cy="150" r="90" fill="#008751" opacity="0.18"/>
+  <circle cx="640" cy="150" r="60" fill="#22c55e" opacity="0.22"/>
+  <text x="400" y="140" fill="#e8efe9" font-family="Georgia, serif" font-size="34" text-anchor="middle">Gbé Tché</text>
+  <text x="400" y="175" fill="#9db3a6" font-family="Georgia, serif" font-size="15" text-anchor="middle" opacity="0.8">français ⇄ fon</text>
+  <rect x="120" y="240" width="560" height="64" rx="12" fill="#131c16" stroke="#22322a"/>
+  <text x="140" y="279" fill="#e8efe9" font-family="Georgia, serif" font-size="17">Bonjour, comment vas-tu ?</text>
+  <rect x="120" y="320" width="560" height="64" rx="12" fill="#0c221a" stroke="#22c55e" stroke-opacity="0.4"/>
+  <text x="140" y="359" fill="#22c55e" font-family="Georgia, serif" font-size="17">Kú ń wí, ìnkú tó?</text>
+  <text x="120" y="420" fill="#9db3a6" font-family="monospace" font-size="12" opacity="0.6">126 000+ paires · 31 000 versets · IBM Model 1</text>
+</svg>
