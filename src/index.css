@@ -15,17 +15,6 @@
   --font-body: 'Inter', sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--color-night);
-  color: var(--color-ink);
-  font-family: var(--font-body);
-  line-height: 1.6;
-}
-
 h1,
 h2,
 h3 {
@@ -43,11 +32,68 @@ h3 {
   transform: translateY(24px);
   transition:
     opacity 0.6s ease,
-    transform 0.6s ease;
+    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ---------- Boutons avec feedback d'appui ---------- */
+.btn-primary {
+  position: relative;
+  transition:
+    transform 0.16s cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(0, 135, 81, 0.35);
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ---------- Cartes avec liseré gradient au survol ---------- */
+.glow-card {
+  position: relative;
+}
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.55), rgba(252, 209, 22, 0.25) 50%, transparent 80%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+/* ---------- Titres à gradient ---------- */
+.gradient-text {
+  background: linear-gradient(100deg, #e8efe9 30%, #22c55e 75%, #fcd116 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Tags ---------- */
+.tag {
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.tag:hover {
+  border-color: rgba(34, 197, 94, 0.5);
+  color: var(--color-benin-bright);
 }
 
 /* ---------- Diaporama d'arrière-plan ---------- */
@@ -66,7 +112,7 @@ h3 {
   opacity: 1;
   transform: scale(1.07);
 
-@starting-style {
+  @starting-style {
     opacity: 0;
     transform: scale(1);
   }
@@ -138,7 +184,72 @@ h3 {
   }
 }
 
+/* ---------- Cartes de statistiques (admin) ---------- */
+.stat-card {
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.2s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Panneaux graphiques (admin) ---------- */
+.chart-panel {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.chart-panel:hover {
+  border-color: rgba(34, 197, 94, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Tracé animé des courbes ---------- */
+.chart-line {
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400;
+  animation: chart-draw 1.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+@keyframes chart-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- Glow du héro public ---------- */
+.hero-glow {
+  background:
+    radial-gradient(700px 420px at 78% 18%, rgba(0, 135, 81, 0.18), transparent 70%),
+    radial-gradient(520px 380px at 12% 82%, rgba(252, 209, 22, 0.07), transparent 70%),
+    radial-gradient(900px 500px at 50% -10%, rgba(34, 197, 94, 0.08), transparent 65%);
+}
+
+/* ---------- Barre de fin de texte (décoratif) ---------- */
+.text-glow {
+  text-shadow: 0 0 32px rgba(34, 197, 94, 0.35);
+}
+
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .glow-card::before,
+  .tag,
+  .stat-card,
+  .chart-panel,
+  .tilt-card {
+    transition: none;
+  }
+  .btn-primary:hover {
+    transform: none;
+  }
+  .stat-card:hover {
+    transform: none;
+  }
+  .chart-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
   .cube {
     animation: none;
     transform: rotateX(-12deg) rotateY(-24deg);
@@ -147,8 +258,7 @@ h3 {
     transition: opacity 1.2s ease;
     transform: none;
   }
-  .tilt-card {
-    transition: none;
+  .bg-slide-active {
+    transform: none;
   }
 }
-

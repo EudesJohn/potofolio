@@ -196,6 +196,41 @@ export async function getPageViewsPerDay(days = 30): Promise<DailyCount[]> {
   return out;
 }
 
+/** Statistiques brutes des visites (admin uniquement). */
+export async function getViewStats(): Promise<{
+  total: number;
+  today: number;
+  week: number;
+  month: number;
+  uniquePaths: number;
+  topPages: { path: string; count: number }[];
+}> {
+  const { count: total } = await supabase
+    .from('page_views')
+    .select('*', { count: 'exact', head: true });
+  const { count: today } = await supabase
+    .from('page_views')
+    .select('*', { count: 'exact', head: true })
+    .gte('created_at', new Date(new Date().setHours(0, 0, 0, 0)).toISOString());
+  const { count: week } = await supabase
+    .from('page_views')
+    .select('*', { count: 'exact', head: true })
+    .gte('created_at', new Date(Date.now() - 7 * 864e5).toISOString());
+  const { count: month } = await supabase
+    .from('page_views')
+    .select('*', { count: 'exact', head: true })
+    .gte('created_at', new Date(Date.now() - 30 * 864e5).toISOString());
+  const { data: paths } = await supabase.from('page_views').select('path');
+  const counts = new Map<string, number>();
+  (paths ?? []).forEach((r: { path: string }) => counts.set(r.path, (counts.get(r.path) ?? 0) + 1));
+  const topPages = [...counts.entries()]
+    .map(([path, count]) => ({ path, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+  const uniquePaths = counts.size;
+  return { total: total ?? 0, today: today ?? 0, week: week ?? 0, month: month ?? 0, uniquePaths, topPages };
+}
+
 // ---------- Métriques de progression ----------
 
 export async function getMetrics() {
